@@ -1,19 +1,27 @@
 {
   "version": 2,
+  "name": "domain-manager",
   "builds": [
     {
-      "src": "src/index.js",
+      "src": "client/vite.config.ts",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "client/dist"
+      }
+    },
+    {
+      "src": "server/server.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "src/index.js"
+      "dest": "/server/server.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/"
+      "dest": "/client/dist/$1"
     }
   ]
 }
